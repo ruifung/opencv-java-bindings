@@ -16,6 +16,7 @@ name: Build OpenPnP OpenCV Distribution
 on: 
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build_linux_arm: 
