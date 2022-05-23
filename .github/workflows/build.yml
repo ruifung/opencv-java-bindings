@@ -439,11 +439,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
-          server-id: ossrh
-          server-username: OSSRH_USERNAME
-          server-password: OSSRH_PASSWORD
-          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+#          server-id: ossrh
+#          server-username: OSSRH_USERNAME
+#          server-password: OSSRH_PASSWORD
+#          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+#          gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
       - name: Get Version Info
         run: |
@@ -463,13 +463,16 @@ jobs:
           cp ubuntu-18.04-arm64/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/ARMv8
           cp windows-2016/x86/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_32
           cp windows-2016/x64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64
-
-      - name: Publish to Apache Maven Central
-        run: mvn -B -e clean deploy -P release-sign-artifacts
+#      - name: Publish to Apache Maven Central
+#        run: mvn -B -e clean deploy -P release-sign-artifacts
+#        env:
+#          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+#          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      - name: Publish to Github Packages
+        run: mvn -B -e clean deploy
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
